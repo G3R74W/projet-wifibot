@@ -31,5 +31,17 @@ void MainWindow::on_disconnect_clicked()
     wifibot.disConnect();
 }
 
+void MainWindow::on_forward_pressed(){
 
+}
+
+void MainWindow::on_forward_speed_valueChanged(int arg1){
+
+}
+
+void MainWindow::on_forward_clicked()
+{
+    wifibot.DataToSend[2]= 120;
+    wifibot.MyTimerSlot();
+}
 

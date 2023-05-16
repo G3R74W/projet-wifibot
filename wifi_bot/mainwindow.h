@@ -29,6 +29,8 @@ private slots:
 
     void on_forward_speed_valueChanged(int arg1);
 
+    void on_forward_pressed();
+
 private:
     Ui::MainWindow *ui;
     MyRobot wifibot;

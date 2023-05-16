@@ -16,7 +16,8 @@ MyRobot::MyRobot(QObject *parent) : QObject(parent) {
     DataReceived.resize(21);
     TimerEnvoi = new QTimer();
     // setup signal and slot
-    connect(TimerEnvoi, SIGNAL(timeout()), this, SLOT(MyTimerSlot())); //Send data to wifibot timer
+    connect(TimerEnvoi, SIGNAL(timeout()), this, SLOT(MyTimerSlot()));
+
 }
 
 
@@ -30,7 +31,7 @@ void MyRobot::doConnect() {
     socket->connectToHost("192.168.10.1", 5010);
     //socket->connectToHost("192.168.1.106", 15020); // connection to wifibot
     // we need to wait...
-    if(!socket->waitForConnected(5010)) {
+    if(!socket->waitForConnected(5002)) {
         qDebug() << "Error: " << socket->errorString();
         return;
     }
