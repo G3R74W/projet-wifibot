@@ -5,6 +5,7 @@
 #include <QTcpSocket>
 #include <QAbstractSocket>
 #include <QDebug>
+#include <QUrl>
 #include <QTimer>
 #include <QMutex>
 
@@ -18,6 +19,7 @@ public:
     QByteArray DataReceived;
     QMutex Mutex;
 
+
 signals:
     void updateUI(const QByteArray Data);
 public slots:
@@ -30,6 +32,7 @@ public slots:
 private:
     QTcpSocket *socket;
     QTimer *TimerEnvoi;
+
 };
 
 #endif // MYROBOT_H
