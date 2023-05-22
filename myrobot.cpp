@@ -70,3 +70,100 @@ void MyRobot::MyTimerSlot() {
     Mutex.unlock();
 }
 
+short Crc16(unsigned char *Adresse_tab , unsigned char Taille_max)
+{
+    unsigned int Crc = 0xFFFF;
+    unsigned int Polynome = 0xA001;
+    unsigned int CptOctet = 0;
+    unsigned int CptBit = 0;
+    unsigned int Parity= 0;
+    Crc = 0xFFFF;
+    Polynome = 0xA001;
+    for ( CptOctet= 1 ; CptOctet < Taille_max ; CptOctet++){
+        Crc ^= *( Adresse_tab + CptOctet);
+        for ( CptBit = 0; CptBit <= 7 ; CptBit++){
+            Parity= Crc;
+            Crc >>= 1;
+            if (Parity%2 == true) Crc ^= Polynome;
+        }
+    }
+    return(Crc);
+}
+
+
+void MyRobot::move(Direction direction, int speed){
+    while (Mutex.tryLock());
+
+    this->DataToSend[2] = 0x00;
+    this->DataToSend[3] = 0x00;
+    this->DataToSend[4] = 0x00;
+    this->DataToSend[5] = 0x00;
+
+    switch (direction) {
+    case Direction::FORWARD:
+        this->DataToSend[2] = speed;
+        this->DataToSend[3] = 0;
+        this->DataToSend[4] = speed;
+        this->DataToSend[5] = 0;
+        this->DataToSend[6] = 0b01010000;
+        break;
+    case Direction::FORWARD_LEFT:
+        this->DataToSend[2] = (speed - 70) > 0 ? (speed - 70) : 0 ;
+        this->DataToSend[3] = 0;
+        this->DataToSend[4] = speed;
+        this->DataToSend[5] = 0;
+        this->DataToSend[6] = 0b01010000;
+        break;
+    case Direction::FORWARD_RIGHT:
+        this->DataToSend[2] = speed;
+        this->DataToSend[3] = 0;
+        this->DataToSend[4] = (speed - 70) > 0 ? (speed - 70) : 0 ;
+        this->DataToSend[5] = 0;
+        this->DataToSend[6] = 0b01010000;
+        break;
+    case Direction::LEFT:
+        this->DataToSend[2] = speed;
+        this->DataToSend[3] = 0;
+        this->DataToSend[4] = (speed - 50) > 0 ? (speed - 50) : 0 ;
+        this->DataToSend[5] = 0;
+        this->DataToSend[6] = 0b01000000;
+        break;
+    case Direction::RIGHT:
+        this->DataToSend[2] = (speed - 50) > 0 ? (speed - 50) : 0 ;
+        this->DataToSend[3] = 0;
+        this->DataToSend[4] = speed;
+        this->DataToSend[5] = 0;
+        this->DataToSend[6] = 0b00010000;
+        break;
+    case Direction::BACKWARD:
+        this->DataToSend[2] = speed;
+        this->DataToSend[3] = 0;
+        this->DataToSend[4] = speed;
+        this->DataToSend[5] = 0;
+        this->DataToSend[6] = 0b00000000;
+        break;
+    case Direction::BACKWARD_LEFT:
+        this->DataToSend[2] = (speed - 70) > 0 ? (speed - 70) : 0 ;
+        this->DataToSend[3] = 0;
+        this->DataToSend[4] = speed;
+        this->DataToSend[5] = 0;
+        this->DataToSend[6] = 0b00000000;
+        break;
+    case Direction::BACKWARD_RIGHT:
+        this->DataToSend[2] = speed;
+        this->DataToSend[3] = 0;
+        this->DataToSend[4] = (speed - 70) > 0 ? (speed - 70) : 0 ;
+        this->DataToSend[5] = 0;
+        this->DataToSend[6] = 0b00000000;
+        break;
+    default :
+        break;
+    }
+    unsigned char *p = (unsigned char *)DataToSend.data();
+    short crc = (short)Crc16(p, 7);
+
+    DataToSend[7] = (char)crc;
+    DataToSend[8] = (char)(crc >> 8);
+
+    Mutex.unlock();
+}

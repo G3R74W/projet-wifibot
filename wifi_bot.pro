@@ -1,9 +1,7 @@
 QT       += core gui network
-
 QT += webenginewidgets
 QT +=multimedia
 QT += multimediawidgets
-
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -19,6 +17,7 @@ SOURCES += \
     myrobot.cpp
 
 HEADERS += \
+    direction.h \
     mainwindow.h \
     myrobot.h
 

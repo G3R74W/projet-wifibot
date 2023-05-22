@@ -8,6 +8,7 @@
 #include <QUrl>
 #include <QTimer>
 #include <QMutex>
+#include "direction.h"
 
 class MyRobot : public QObject {
     Q_OBJECT
@@ -18,6 +19,7 @@ public:
     QByteArray DataToSend;
     QByteArray DataReceived;
     QMutex Mutex;
+    void move(Direction direction, int speed=150);
 
 
 signals:
@@ -28,6 +30,7 @@ public slots:
     void bytesWritten(qint64 bytes);
     void readyRead();
     void MyTimerSlot();
+
 
 private:
     QTcpSocket *socket;
