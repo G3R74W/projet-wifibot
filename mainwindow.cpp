@@ -41,16 +41,104 @@ void MainWindow::on_forward_pressed(){
     wifibot.move(Direction::FORWARD);
 }
 
+void MainWindow::on_right_pressed()
+{
+    wifibot.move(Direction::RIGHT);
+}
+
+
+void MainWindow::on_backward_pressed()
+{
+    wifibot.move(Direction::BACKWARD);
+}
+
+
+void MainWindow::on_left_pressed()
+{
+    wifibot.move(Direction::LEFT);
+}
+
+
+
+void MainWindow::on_forwardL_pressed()
+{
+    wifibot.move(Direction::FORWARD_LEFT);
+}
+
+
+void MainWindow::on_forwardR_pressed()
+{
+    wifibot.move(Direction::FORWARD_RIGHT);
+}
+
+void MainWindow::on_forwardR_released()
+{
+    wifibot.move(Direction::NONE);
+}
+
+
+void MainWindow::on_backwardL_pressed()
+{
+    wifibot.move(Direction::BACKWARD_LEFT);
+}
+
+
+void MainWindow::on_backwardR_pressed()
+{
+    wifibot.move(Direction::BACKWARD_RIGHT);
+}
+
+
+void MainWindow::on_forward_clicked(){
+
+}
+
 void MainWindow::on_forward_speed_valueChanged(int arg1){
 
 }
 
-void MainWindow::on_forward_clicked()
-{
+void MainWindow::on_pushButton_4_pressed(){
 
 }
 
+void MainWindow::on_right_released()
+{
+    wifibot.move(Direction::NONE);
+}
 
 
+void MainWindow::on_backwardR_released()
+{
+    wifibot.move(Direction::NONE);
+}
 
+
+void MainWindow::on_backward_released()
+{
+    wifibot.move(Direction::NONE);
+}
+
+
+void MainWindow::on_backwardL_released()
+{
+    wifibot.move(Direction::NONE);
+}
+
+
+void MainWindow::on_left_released()
+{
+    wifibot.move(Direction::NONE);
+}
+
+
+void MainWindow::on_forwardL_released()
+{
+    wifibot.move(Direction::NONE);
+}
+
+
+void MainWindow::on_forward_released()
+{
+    wifibot.move(Direction::NONE);
+}
 

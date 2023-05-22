@@ -108,7 +108,7 @@ void MyRobot::move(Direction direction, int speed){
         this->DataToSend[6] = 0b01010000;
         break;
     case Direction::FORWARD_LEFT:
-        this->DataToSend[2] = (speed - 70) > 0 ? (speed - 70) : 0 ;
+        this->DataToSend[2] = (speed  > 0 ? (speed - 70) : 0);
         this->DataToSend[3] = 0;
         this->DataToSend[4] = speed;
         this->DataToSend[5] = 0;
@@ -121,15 +121,15 @@ void MyRobot::move(Direction direction, int speed){
         this->DataToSend[5] = 0;
         this->DataToSend[6] = 0b01010000;
         break;
-    case Direction::LEFT:
+    case Direction::RIGHT:
         this->DataToSend[2] = speed;
         this->DataToSend[3] = 0;
-        this->DataToSend[4] = (speed - 50) > 0 ? (speed - 50) : 0 ;
+        this->DataToSend[4] = speed;
         this->DataToSend[5] = 0;
         this->DataToSend[6] = 0b01000000;
         break;
-    case Direction::RIGHT:
-        this->DataToSend[2] = (speed - 50) > 0 ? (speed - 50) : 0 ;
+    case Direction::LEFT:
+        this->DataToSend[2] = speed;
         this->DataToSend[3] = 0;
         this->DataToSend[4] = speed;
         this->DataToSend[5] = 0;
@@ -152,7 +152,7 @@ void MyRobot::move(Direction direction, int speed){
     case Direction::BACKWARD_RIGHT:
         this->DataToSend[2] = speed;
         this->DataToSend[3] = 0;
-        this->DataToSend[4] = (speed - 70) > 0 ? (speed - 70) : 0 ;
+        this->DataToSend[4] = (speed - 130) > 0 ? (speed - 130) : 0 ;
         this->DataToSend[5] = 0;
         this->DataToSend[6] = 0b00000000;
         break;

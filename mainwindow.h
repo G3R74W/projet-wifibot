@@ -36,6 +36,38 @@ private slots:
 
     void on_forward_pressed();
 
+    void on_right_pressed();
+
+    void on_backward_pressed();
+
+    void on_left_pressed();
+
+    void on_forwardL_pressed();
+
+    void on_forwardR_pressed();
+
+    void on_backwardL_pressed();
+
+    void on_pushButton_4_pressed();
+
+    void on_backwardR_pressed();
+
+    void on_forwardR_released();
+
+    void on_right_released();
+
+    void on_backwardR_released();
+
+    void on_backward_released();
+
+    void on_backwardL_released();
+
+    void on_left_released();
+
+    void on_forwardL_released();
+
+    void on_forward_released();
+
 private:
     Ui::MainWindow *ui;
     MyRobot wifibot;
