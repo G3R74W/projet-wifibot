@@ -91,6 +91,8 @@ short Crc16(unsigned char *Adresse_tab , unsigned char Taille_max)
 }
 
 
+
+//directions definition
 void MyRobot::move(Direction direction, int speed){
     while (Mutex.tryLock());
 
@@ -99,7 +101,9 @@ void MyRobot::move(Direction direction, int speed){
     this->DataToSend[4] = 0x00;
     this->DataToSend[5] = 0x00;
 
+    //using switch case to define ervery direction
     switch (direction) {
+    //forward direction
     case Direction::FORWARD:
         this->DataToSend[2] = speed;
         this->DataToSend[3] = 0;
@@ -107,6 +111,8 @@ void MyRobot::move(Direction direction, int speed){
         this->DataToSend[5] = 0;
         this->DataToSend[6] = 0b01010000;
         break;
+
+    //backwards left direction
     case Direction::FORWARD_LEFT:
         this->DataToSend[2] = (speed  > 0 ? (speed - 70) : 0);
         this->DataToSend[3] = 0;
@@ -114,6 +120,8 @@ void MyRobot::move(Direction direction, int speed){
         this->DataToSend[5] = 0;
         this->DataToSend[6] = 0b01010000;
         break;
+
+    //forward right direction
     case Direction::FORWARD_RIGHT:
         this->DataToSend[2] = speed;
         this->DataToSend[3] = 0;
@@ -121,6 +129,9 @@ void MyRobot::move(Direction direction, int speed){
         this->DataToSend[5] = 0;
         this->DataToSend[6] = 0b01010000;
         break;
+
+    //right direction
+    //permet de faire du surplace
     case Direction::RIGHT:
         this->DataToSend[2] = speed;
         this->DataToSend[3] = 0;
@@ -128,6 +139,9 @@ void MyRobot::move(Direction direction, int speed){
         this->DataToSend[5] = 0;
         this->DataToSend[6] = 0b01000000;
         break;
+
+    //left direction
+    //permet de faire du surplace
     case Direction::LEFT:
         this->DataToSend[2] = speed;
         this->DataToSend[3] = 0;
@@ -135,6 +149,9 @@ void MyRobot::move(Direction direction, int speed){
         this->DataToSend[5] = 0;
         this->DataToSend[6] = 0b00010000;
         break;
+
+    //backward direction
+    //permet de reculer
     case Direction::BACKWARD:
         this->DataToSend[2] = speed;
         this->DataToSend[3] = 0;
@@ -142,6 +159,8 @@ void MyRobot::move(Direction direction, int speed){
         this->DataToSend[5] = 0;
         this->DataToSend[6] = 0b00000000;
         break;
+
+    //backward left direction
     case Direction::BACKWARD_LEFT:
         this->DataToSend[2] = (speed - 70) > 0 ? (speed - 70) : 0 ;
         this->DataToSend[3] = 0;
@@ -159,6 +178,8 @@ void MyRobot::move(Direction direction, int speed){
     default :
         break;
     }
+
+    //envoie du CRC
     unsigned char *p = (unsigned char *)DataToSend.data();
     short crc = (short)Crc16(p, 7);
 
