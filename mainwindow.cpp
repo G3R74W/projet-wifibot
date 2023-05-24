@@ -23,8 +23,10 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+//lien entre commandes et bouttons de l'interface
 
 
+//connect to robot via button
 void MainWindow::on_connect_clicked()
 {
     wifibot.doConnect();
@@ -32,11 +34,14 @@ void MainWindow::on_connect_clicked()
 }
 
 
+//disconnect robot
 void MainWindow::on_disconnect_clicked()
 {
     wifibot.disConnect();
 }
 
+
+//directions linked to buttons
 void MainWindow::on_forward_pressed(){
     wifibot.move(Direction::FORWARD);
 }
@@ -107,6 +112,8 @@ void MainWindow::on_right_released()
 }
 
 
+
+//when buttons released robot stops
 void MainWindow::on_backwardR_released()
 {
     wifibot.move(Direction::NONE);
