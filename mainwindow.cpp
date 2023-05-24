@@ -24,6 +24,7 @@ MainWindow::~MainWindow()
 }
 
 //lien entre commandes et bouttons de l'interface
+//commentaire test
 
 
 //connect to robot via button
