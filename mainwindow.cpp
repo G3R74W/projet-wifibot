@@ -8,7 +8,7 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
-
+    //recuperation du flux video de la camera
     ui->setupUi(this);
     MyRobot *wifibot = new MyRobot();
     QWebEngineView *test = new QWebEngineView();
