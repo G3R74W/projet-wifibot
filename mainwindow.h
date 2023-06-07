@@ -24,6 +24,8 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    void keyPressEvent(QKeyEvent* event);
+    void keyReleaseEvent(QKeyEvent* event);
 
 private slots:
     void on_connect_clicked();
@@ -67,6 +69,8 @@ private slots:
     void on_forwardL_released();
 
     void on_forward_released();
+
+    void on_pushButton_clicked();
 
 private:
     Ui::MainWindow *ui;
