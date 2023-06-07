@@ -70,7 +70,17 @@ private slots:
 
     void on_forward_released();
 
+
     void on_pushButton_clicked();
+
+    void on_cameraRight_clicked();
+
+    void on_cameraLeft_clicked();
+
+    void on_cameraUp_clicked();
+
+    void on_cameraDown_clicked();
+
 
 private:
     Ui::MainWindow *ui;

@@ -3,6 +3,12 @@
 #include "ui_mainwindow.h"
 #include "myrobot.h"
 
+#include <QNetworkAccessManager>
+#include <QNetworkRequest>
+#include <QNetworkReply>
+#include <QUrl>
+#include <QDebug>
+
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -16,6 +22,7 @@ MainWindow::MainWindow(QWidget *parent)
     test->load(URL);
     test->show();
 }
+
 
 MainWindow::~MainWindow()
 {
@@ -167,8 +174,108 @@ void MainWindow::on_forward_released()
 }
 
 
+
 void MainWindow::on_pushButton_clicked()
 {
     close();
+
+}
+
+
+//direction de la camera
+
+//droite
+void MainWindow::on_cameraRight_clicked()
+{
+    QNetworkAccessManager* manager = new QNetworkAccessManager(this);
+
+    QUrl url("http://192.168.1.106:8080/?action=command&dest=0&plugin=0&id=10094852&group=1&value=-200");
+    QNetworkRequest request(url);
+
+    QNetworkReply* reply = manager->get(request);
+
+    connect(reply, &QNetworkReply::finished, [=]() {
+        if (reply->error() == QNetworkReply::NoError) {
+            QByteArray data = reply->readAll();
+            qDebug() << "Réponse :" << data;
+        } else {
+            qDebug() << "Erreur :" << reply->errorString();
+        }
+
+        reply->deleteLater();
+    });
+}
+
+
+//gauche
+
+void MainWindow::on_cameraLeft_clicked()
+{
+    QNetworkAccessManager* manager = new QNetworkAccessManager(this);
+
+    QUrl url("http://192.168.1.106:8080/?action=command&dest=0&plugin=0&id=10094852&group=1&value=200");
+    QNetworkRequest request(url);
+
+    QNetworkReply* reply = manager->get(request);
+
+    connect(reply, &QNetworkReply::finished, [=]() {
+        if (reply->error() == QNetworkReply::NoError) {
+            QByteArray data = reply->readAll();
+            qDebug() << "Réponse :" << data;
+        } else {
+            qDebug() << "Erreur :" << reply->errorString();
+        }
+
+        reply->deleteLater();
+    });
+}
+
+//haut
+
+void MainWindow::on_cameraUp_clicked()
+{
+    QNetworkAccessManager* manager = new QNetworkAccessManager(this);
+
+    QUrl url("http://192.168.1.106:8080/?action=command&dest=0&plugin=0&id=10094853&group=1&value=-200");
+    QNetworkRequest request(url);
+
+    QNetworkReply* reply = manager->get(request);
+
+    connect(reply, &QNetworkReply::finished, [=]() {
+        if (reply->error() == QNetworkReply::NoError) {
+            QByteArray data = reply->readAll();
+            qDebug() << "Réponse :" << data;
+        } else {
+            qDebug() << "Erreur :" << reply->errorString();
+        }
+
+        reply->deleteLater();
+    });
+}
+
+//bas
+
+
+
+
+void MainWindow::on_cameraDown_clicked()
+{
+    QNetworkAccessManager* manager = new QNetworkAccessManager(this);
+
+    QUrl url("http://192.168.1.106:8080/?action=command&dest=0&plugin=0&id=10094853&group=1&value=200");
+    QNetworkRequest request(url);
+
+    QNetworkReply* reply = manager->get(request);
+
+    connect(reply, &QNetworkReply::finished, [=]() {
+        if (reply->error() == QNetworkReply::NoError) {
+            QByteArray data = reply->readAll();
+            qDebug() << "Réponse :" << data;
+        } else {
+            qDebug() << "Erreur :" << reply->errorString();
+        }
+
+        reply->deleteLater();
+    });
 }
 
