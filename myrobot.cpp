@@ -70,6 +70,9 @@ void MyRobot::MyTimerSlot() {
     Mutex.unlock();
 }
 
+
+//fonction permettant calculer le CRC
+
 short Crc16(unsigned char *Adresse_tab , unsigned char Taille_max)
 {
     unsigned int Crc = 0xFFFF;
@@ -93,6 +96,11 @@ short Crc16(unsigned char *Adresse_tab , unsigned char Taille_max)
 
 
 //directions definition
+
+/*
+data goes from 0 to 8
+
+*/
 void MyRobot::move(Direction direction, int speed){
     while (Mutex.tryLock());
 
@@ -180,6 +188,7 @@ void MyRobot::move(Direction direction, int speed){
     }
 
     //envoie du CRC
+
     unsigned char *p = (unsigned char *)DataToSend.data();
     short crc = (short)Crc16(p, 7);
 

@@ -11,11 +11,10 @@ MainWindow::MainWindow(QWidget *parent)
     //recuperation du flux video de la camera
     ui->setupUi(this);
     MyRobot *wifibot = new MyRobot();
-    QWebEngineView *test = new QWebEngineView();
+    QWebEngineView *test = this->ui->cameraFrame;
     QUrl URL = QUrl("http://192.168.1.106:8080/?action=stream");
     test->load(URL);
     test->show();
-
 }
 
 MainWindow::~MainWindow()
