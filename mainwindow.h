@@ -24,6 +24,8 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    void keyPressEvent(QKeyEvent* event);
+    void keyReleaseEvent(QKeyEvent* event);
 
 private slots:
     void on_connect_clicked();
@@ -68,6 +70,9 @@ private slots:
 
     void on_forward_released();
 
+
+    void on_pushButton_clicked();
+
     void on_cameraRight_clicked();
 
     void on_cameraLeft_clicked();
@@ -75,6 +80,7 @@ private slots:
     void on_cameraUp_clicked();
 
     void on_cameraDown_clicked();
+
 
 private:
     Ui::MainWindow *ui;

@@ -154,6 +154,19 @@
      </rect>
     </property>
    </widget>
+
+   <widget class="QPushButton" name="pushButton">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>10</y>
+      <width>80</width>
+      <height>18</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Exit</string>
+
    <widget class="QPushButton" name="cameraLeft">
     <property name="geometry">
      <rect>
@@ -204,6 +217,7 @@
     </property>
     <property name="text">
      <string>\/</string>
+
     </property>
    </widget>
   </widget>
@@ -213,7 +227,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>26</height>
+     <height>17</height>
     </rect>
    </property>
   </widget>

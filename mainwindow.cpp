@@ -29,6 +29,23 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::keyPressEvent(QKeyEvent* event){
+    if(event->key()==Qt::Key_Z || event->key()==Qt::Key_Up){
+        wifibot.move(Direction::FORWARD);
+    }
+    else if(event->key()==Qt::Key_S || event->key()==Qt::Key_Down){
+        wifibot.move(Direction::BACKWARD);
+    }
+    else if(event->key()==Qt::Key_Q || event->key()==Qt::Key_Left){
+        wifibot.move(Direction::LEFT);
+    }
+    else if(event->key()==Qt::Key_D || event->key()==Qt::Key_Right){
+        wifibot.move(Direction::RIGHT);
+    }
+}
+void MainWindow::keyReleaseEvent(QKeyEvent* event){
+    wifibot.move(Direction::NONE);
+}
 //lien entre commandes et bouttons de l'interface
 //commentaire test
 
@@ -155,6 +172,15 @@ void MainWindow::on_forward_released()
 {
     wifibot.move(Direction::NONE);
 }
+
+
+
+void MainWindow::on_pushButton_clicked()
+{
+    close();
+
+}
+
 
 //direction de la camera
 
