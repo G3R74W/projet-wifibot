@@ -8,32 +8,13 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
-
+    //recuperation du flux video de la camera
     ui->setupUi(this);
-
-    QWebEngineView *test = new QWebEngineView();
+    MyRobot *wifibot = new MyRobot();
+    QWebEngineView *test = this->ui->cameraFrame;
     QUrl URL = QUrl("http://192.168.1.106:8080/?action=stream");
     test->load(URL);
     test->show();
-//    QWidget *window = new QWidget(this);
-//    QVBoxLayout *layout = new QVBoxLayout(window);
-
-//    QMediaPlayer *player = new QMediaPlayer;
-//    QVideoWidget *videoWidget = new QVideoWidget;
-//    player->setVideoOutput(videoWidget);
-
-//    layout->addWidget(videoWidget);
-//    window->resize(100,100);
-
-//   player->setMedia(QUrl("http://192.168.1.106:8080/?action=stream"));
-//   player->play();
-
-//    setCentralWidget(window);
-//    window->show();
-//    Phonon::VideoPlayer *player = new Phonon::VideoPlayer(Phonon::VideoCategory);
-//    player->play(Phonon::MediaSource("http://192.168.1.106:8080/?action=stream"));
-
-
 }
 
 MainWindow::~MainWindow()
@@ -41,37 +22,79 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+//lien entre commandes et bouttons de l'interface
+//commentaire test
 
 
+//connect to robot via button
 void MainWindow::on_connect_clicked()
 {
     wifibot.doConnect();
 
-    QWidget *window = new QWidget(this);
-    QVBoxLayout *layout = new QVBoxLayout(window);
-
-    QMediaPlayer *player = new QMediaPlayer;
-    QVideoWidget *videoWidget = new QVideoWidget;
-    player->setVideoOutput(videoWidget);
-
-    layout->addWidget(videoWidget);
-    window->resize(100,100);
-
-    player->setMedia(QUrl("http://192.168.1.106:8080/?action=stream"));
-    player->play();
-
-    setCentralWidget(window);
-    window->show();
-
 }
 
 
+//disconnect robot
 void MainWindow::on_disconnect_clicked()
 {
     wifibot.disConnect();
 }
 
+
+//directions linked to buttons
 void MainWindow::on_forward_pressed(){
+    wifibot.move(Direction::FORWARD);
+}
+
+void MainWindow::on_right_pressed()
+{
+    wifibot.move(Direction::RIGHT);
+}
+
+
+void MainWindow::on_backward_pressed()
+{
+    wifibot.move(Direction::BACKWARD);
+}
+
+
+void MainWindow::on_left_pressed()
+{
+    wifibot.move(Direction::LEFT);
+}
+
+
+
+void MainWindow::on_forwardL_pressed()
+{
+    wifibot.move(Direction::FORWARD_LEFT);
+}
+
+
+void MainWindow::on_forwardR_pressed()
+{
+    wifibot.move(Direction::FORWARD_RIGHT);
+}
+
+void MainWindow::on_forwardR_released()
+{
+    wifibot.move(Direction::NONE);
+}
+
+
+void MainWindow::on_backwardL_pressed()
+{
+    wifibot.move(Direction::BACKWARD_LEFT);
+}
+
+
+void MainWindow::on_backwardR_pressed()
+{
+    wifibot.move(Direction::BACKWARD_RIGHT);
+}
+
+
+void MainWindow::on_forward_clicked(){
 
 }
 
@@ -79,13 +102,50 @@ void MainWindow::on_forward_speed_valueChanged(int arg1){
 
 }
 
-void MainWindow::on_forward_clicked()
+void MainWindow::on_pushButton_4_pressed(){
+
+}
+
+void MainWindow::on_right_released()
 {
-    wifibot.DataToSend[2]= 120;
-    wifibot.MyTimerSlot();
+    wifibot.move(Direction::NONE);
 }
 
 
 
+//when buttons released robot stops
+void MainWindow::on_backwardR_released()
+{
+    wifibot.move(Direction::NONE);
+}
 
+
+void MainWindow::on_backward_released()
+{
+    wifibot.move(Direction::NONE);
+}
+
+
+void MainWindow::on_backwardL_released()
+{
+    wifibot.move(Direction::NONE);
+}
+
+
+void MainWindow::on_left_released()
+{
+    wifibot.move(Direction::NONE);
+}
+
+
+void MainWindow::on_forwardL_released()
+{
+    wifibot.move(Direction::NONE);
+}
+
+
+void MainWindow::on_forward_released()
+{
+    wifibot.move(Direction::NONE);
+}
 
