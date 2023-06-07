@@ -165,7 +165,9 @@
      </rect>
     </property>
     <property name="text">
-     <string>Exit</string>
+     <string>Exit</string>   
+ </property>  
+ </widget>
 
    <widget class="QPushButton" name="cameraLeft">
     <property name="geometry">
