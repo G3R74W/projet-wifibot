@@ -326,10 +326,10 @@ void MainWindow::displayIR(){
     unsigned char forward_L = wifibot.DataReceived[3];
     unsigned char backward_L = wifibot.DataReceived[4];
     //Conversion en voltage
-    float FR = (((float)forward_R)*2.0)/156.0;
-    float BR = (((float)backward_R)*2.0)/156.0;
-    float FL = (((float)forward_L)*2.0)/156.0;
-    float BL = (((float)backward_L)*2.0)/156.0;
+    float FR = (((float)forward_R)*1.3)/99.0;
+    float BR = (((float)backward_R)*1.3)/99.0;
+    float FL = (((float)forward_L)*1.3)/99.0;
+    float BL = (((float)backward_L)*1.3)/99.0;
     //Conversion en cm
     float d_FR = (FR*20.0/255.0)*100.0;
     float d_BR = (BR*20.0/255.0)*100.0;
