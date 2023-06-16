@@ -28,6 +28,7 @@ public:
     void keyReleaseEvent(QKeyEvent* event);
     void DataSlot();
     void displayOdometry();
+    void displayIR();
 
 private slots:
     void on_connect_clicked();

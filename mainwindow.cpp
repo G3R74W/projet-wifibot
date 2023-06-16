@@ -289,9 +289,13 @@ void MainWindow::on_cameraDown_clicked()
 void MainWindow::DataSlot(){
     qDebug() << "Timer...";
     int batteryLevel = (int)(((unsigned char)wifibot.DataReceived[2]/10.0)*100.0/10.1);
-    displayOdometry();
     qDebug()<< batteryLevel;
     ui->batteryLevel->setValue(batteryLevel);
+    //Affichage odométrie
+    displayOdometry();
+    //Affichage distance IR
+    displayIR();
+
 }
 
 //change speed
@@ -312,6 +316,36 @@ void MainWindow::displayOdometry(){
     QString b = QString::number(odo_R*tic/time);
     ui->rightSpeed->setText(a);//affichage
     ui->leftSpeed->setText(b);
-
 }
 
+
+void MainWindow::displayIR(){
+    //Recuperation valeur en bits
+    unsigned char forward_R = wifibot.DataReceived[11];
+    unsigned char backward_R = wifibot.DataReceived[12];
+    unsigned char forward_L = wifibot.DataReceived[3];
+    unsigned char backward_L = wifibot.DataReceived[4];
+    //Conversion en voltage
+    float FR = (((float)forward_R)*2.0)/156.0;
+    float BR = (((float)backward_R)*2.0)/156.0;
+    float FL = (((float)forward_L)*2.0)/156.0;
+    float BL = (((float)backward_L)*2.0)/156.0;
+    //Conversion en cm
+    float d_FR = (FR*20.0/255.0)*100.0;
+    float d_BR = (BR*20.0/255.0)*100.0;
+    float d_FL = (FL*20.0/255.0)*100.0;
+    float d_BL = (BL*20.0/255.0)*100.0;
+    //Conversion en string
+    QString dist_FR = QString::number(d_FR);
+    QString dist_BR = QString::number(d_BR);
+    QString dist_FL = QString::number(d_FL);
+    QString dist_BL = QString::number(d_BL);
+    //Affichage des données dans l'interface
+    ui->IR_FR->setText(dist_FR);
+    ui->IR_FL->setText(dist_FL);
+    ui->IR_BR->setText(dist_BR);
+    ui->IR_BL->setText(dist_BL);
+
+
+
+}
