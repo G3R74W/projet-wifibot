@@ -26,6 +26,8 @@ public:
     ~MainWindow();
     void keyPressEvent(QKeyEvent* event);
     void keyReleaseEvent(QKeyEvent* event);
+    void DataSlot();
+    void displayOdometry();
 
 private slots:
     void on_connect_clicked();
@@ -82,10 +84,16 @@ private slots:
     void on_cameraDown_clicked();
 
 
+
+
+    void on_speedSlider_sliderMoved(int position);
+
 private:
     Ui::MainWindow *ui;
     MyRobot wifibot;
     int arg1 = 0;
+    std::array<unsigned long,2> last_odometrie;
+    std::array<unsigned long,2> odometrie;
 };
 
 #endif // MAINWINDOW_H

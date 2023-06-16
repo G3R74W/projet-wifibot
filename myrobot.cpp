@@ -101,7 +101,7 @@ short Crc16(unsigned char *Adresse_tab , unsigned char Taille_max)
 data goes from 0 to 8
 
 */
-void MyRobot::move(Direction direction, int speed){
+void MyRobot::move(Direction direction){
     while (Mutex.tryLock());
 
     this->DataToSend[2] = 0x00;
@@ -197,3 +197,26 @@ void MyRobot::move(Direction direction, int speed){
 
     Mutex.unlock();
 }
+
+//Speed getter
+int MyRobot::getSpeed(){
+    return this->speed;
+}
+
+//Speed setter
+void MyRobot::setSpeed(int speed){
+    this->speed=speed;
+}
+//Récupération des données d'odométrie
+std::array<unsigned long, 2> MyRobot::readOdometry(){
+    std::array<unsigned long, 2> odometry;
+    QByteArray sbuf = DataReceived;
+    //Vitesse gauche du robot
+    odometry[0] = (((long)sbuf[8] << 24)) + (((long)sbuf[7] << 16)) + (((long)sbuf[6] << 8)) + ((long)sbuf[5]);//decalages de bits pour obtenir l'odometrie par paquets de 8
+    //Vitesse droite du robot
+    odometry[1] = (((long)sbuf[16] << 24)) + (((long)sbuf[15] << 16)) + (((long)sbuf[14] << 8)) + ((long)sbuf[13]);
+
+    return odometry;
+}
+
+

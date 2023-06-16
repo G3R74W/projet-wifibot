@@ -14,13 +14,21 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
-    //recuperation du flux video de la camera
+    //Recuperation du flux video de la camera
     ui->setupUi(this);
     MyRobot *wifibot = new MyRobot();
     QWebEngineView *test = this->ui->cameraFrame;
     QUrl URL = QUrl("http://192.168.1.106:8080/?action=stream");
     test->load(URL);
     test->show();
+    //Création d'un timer pour associer la fonction DataSlot
+    QTimer* TimerReceived;
+    TimerReceived = new QTimer(this);
+    connect(TimerReceived, &QTimer::timeout, this, &MainWindow::DataSlot);
+    TimerReceived->start(1000);
+
+
+
 }
 
 
@@ -28,7 +36,7 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
-
+//Détection des touches et déplacement en conséquences
 void MainWindow::keyPressEvent(QKeyEvent* event){
     if(event->key()==Qt::Key_Z || event->key()==Qt::Key_Up){
         wifibot.move(Direction::FORWARD);
@@ -43,6 +51,7 @@ void MainWindow::keyPressEvent(QKeyEvent* event){
         wifibot.move(Direction::RIGHT);
     }
 }
+//Arret du robot quand on lache les touches
 void MainWindow::keyReleaseEvent(QKeyEvent* event){
     wifibot.move(Direction::NONE);
 }
@@ -255,9 +264,6 @@ void MainWindow::on_cameraUp_clicked()
 
 //bas
 
-
-
-
 void MainWindow::on_cameraDown_clicked()
 {
     QNetworkAccessManager* manager = new QNetworkAccessManager(this);
@@ -277,5 +283,35 @@ void MainWindow::on_cameraDown_clicked()
 
         reply->deleteLater();
     });
+}
+
+//Fonction utilisée pour récupérer les informations envoyés par le robot
+void MainWindow::DataSlot(){
+    qDebug() << "Timer...";
+    int batteryLevel = (int)(((unsigned char)wifibot.DataReceived[2]/10.0)*100.0/10.1);
+    displayOdometry();
+    qDebug()<< batteryLevel;
+    ui->batteryLevel->setValue(batteryLevel);
+}
+
+//change speed
+void MainWindow::on_speedSlider_sliderMoved(int position)
+{
+    wifibot.setSpeed(position);
+}
+//affichage de l'odometrie
+void MainWindow::displayOdometry(){
+    last_odometrie =odometrie;//on conserves l'anciene valeur d'odometrie
+    odometrie = wifibot.readOdometry();//recuperation de la nouvelle odometrie
+
+    unsigned long odo_L = odometrie[0] - last_odometrie[0];//calcul de la difference d'odometrie depuis le dernier appel de la fonction
+    unsigned long odo_R = odometrie[1] - last_odometrie[1];
+    float time = 1.0;//on appelle cette fonction toutes les secondes,
+    float tic = 0.44/2048.0;//calcul de la distance pour 1 tic (perimetre de la roue/nb tics de la roue)
+    QString a = QString::number(odo_L*tic/time);//calcul des vitesses en m/s
+    QString b = QString::number(odo_R*tic/time);
+    ui->rightSpeed->setText(a);//affichage
+    ui->leftSpeed->setText(b);
+
 }
 
